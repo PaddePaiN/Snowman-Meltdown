@@ -14,7 +14,52 @@ def play_game():
     print("Welcome to Snowman Meltdown!")
     print("Secret word selected: " + secret_word)  # for testing, later remove this line
 
-    # TODO: Build your game loop here.
+    def game_loop():
+        """Main game loop."""
+
+        secret_word = "python"
+        guessed_letters = []
+        mistakes = 0
+
+        while True:
+            print("\nCurrent word:")
+
+            for letter in secret_word:
+                if letter in guessed_letters:
+                    print(letter, end=" ")
+                else:
+                    print("_", end=" ")
+
+            print()
+
+            print(f"Mistakes: {mistakes}")
+            print(f"Guessed letters: {guessed_letters}")
+
+            guess = input("Guess a letter: ").lower()
+
+            if guess in guessed_letters:
+                print("You already guessed that letter.")
+                continue
+
+            guessed_letters.append(guess)
+
+            if guess in secret_word:
+                print("Correct!")
+            else:
+                print("Wrong!")
+                mistakes += 1
+
+            """Check win"""
+            if all(letter in guessed_letters for letter in secret_word):
+                print(f"\nYou won! The word was: {secret_word}")
+                break
+
+            """Check loss"""
+            if mistakes >= 3:
+                print("\nGame over!")
+                print(f"The word was: {secret_word}")
+                break
+
     # For now, simply prompt the user once:
     guess = input("Guess a letter: ").lower()
     print("You guessed:", guess)
